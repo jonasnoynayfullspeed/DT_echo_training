@@ -45,8 +45,7 @@ func NewController(sqlhandler *sqlhandler.SqlHandler) *Controller {
 func (c Controller) Index(ctx echo.Context) error {
 	blogs, err := c.Interactor.GetBlogList()
 	if err != nil {
-		log.Print(err)
-		return ctx.Render(500, "index.html", nil)
+		return echo.NewHTTPError(http.StatusInternalServerError, "Internal Server Error")
 	}
 
 	return ctx.Render(http.StatusOK, "index.html", HTMLContent{
@@ -59,7 +58,7 @@ func (c Controller) Index(ctx echo.Context) error {
 func (c Controller) ShowBlogListPage(ctx echo.Context) error {
 	blogs, err := c.Interactor.GetBlogList()
 	if err != nil {
-		return ctx.Render(500, "blog_list.html", nil)
+		return echo.NewHTTPError(http.StatusInternalServerError, "Internal Server Error")
 	}
 
 	return ctx.Render(http.StatusOK, "blog_list.html", HTMLContent{
@@ -72,10 +71,10 @@ func (c Controller) ShowBlogListPage(ctx echo.Context) error {
 func (c Controller) ShowBlogDetailsPage(ctx echo.Context) error {
 	ID := ctx.Param("id")
 	blog, err := c.Interactor.GetBlog(ID)
-	if err != nil {
-		log.Print(err)
-		return ctx.Render(500, "blog_show.html", nil)
+	if err != nil || blog.ID == 0 {
+		return echo.NewHTTPError(http.StatusNotFound, "Page Not Found")
 	}
+
 	return ctx.Render(http.StatusOK, "blog_show.html", HTMLContent{
 		SiteTitle: blog.Title,
 		Blog:      blog,
@@ -85,10 +84,10 @@ func (c Controller) ShowBlogDetailsPage(ctx echo.Context) error {
 func (c Controller) EditBlogDetailsPage(ctx echo.Context) error {
 	ID := ctx.Param("id")
 	blog, err := c.Interactor.GetBlog(ID)
-	if err != nil {
-		log.Print(err)
-		return ctx.Render(500, "blog_edit.html", nil)
+	if err != nil || blog.ID == 0 {
+		return echo.NewHTTPError(http.StatusNotFound, "Page Not Found")
 	}
+
 	return ctx.Render(http.StatusOK, "blog_edit.html", blog)
 }
 
@@ -119,7 +118,8 @@ func (c Controller) DeleteBlogPost(ctx echo.Context) error {
 
 func redirectToPage(c echo.Context, page string, err error) error {
 	if err != nil {
-		return c.String(http.StatusInternalServerError, err.Error())
+		log.Print(err.Error())
+		return echo.NewHTTPError(http.StatusInternalServerError, "Internal Server Error")
 	} else {
 		return c.Redirect(http.StatusFound, page)
 	}
