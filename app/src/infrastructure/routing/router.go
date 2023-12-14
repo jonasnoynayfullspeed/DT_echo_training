@@ -36,8 +36,6 @@ func errorPageHandler(err error, c echo.Context) {
 	}
 
 	renderErr := c.Render(code, "error.html", he)
-	//_ = c.JSONPretty(http.StatusOK, he.Message, "  ")
-	//log.Print(code)
 	if err != nil {
 		log.Print(renderErr)
 	}

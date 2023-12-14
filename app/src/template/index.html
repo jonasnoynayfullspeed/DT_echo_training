@@ -6,7 +6,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title></title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -65,7 +65,11 @@
             <hr class="my-4" />
             {{ end }}
             <!-- Pager-->
-            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+            {{if ne (len .Blogs) 0}}
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="/?page={{ .NextPage }}">Older Posts →</a></div>
+            {{ else }}
+            <h1 class="text-center mb-5">No blogs available.</h1>
+            {{ end }}
         </div>
     </div>
 </div>

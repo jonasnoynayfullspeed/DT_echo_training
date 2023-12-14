@@ -65,7 +65,11 @@
                     <hr class="my-4" />
                     {{ end }}
                     <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+                    {{if ne (len .Blogs) 0}}
+                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="/blog/list?page={{ .NextPage }}">Older Posts →</a></div>
+                    {{ else }}
+                    <h1 class="text-center mb-5">No blogs available.</h1>
+                    {{ end }}
                 </div>
             </div>
         </div>

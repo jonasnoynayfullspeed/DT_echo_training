@@ -13,8 +13,8 @@ type Interactor struct {
 // アプリケーション固有のビジネスルール
 // このファイルでは取得したデータを組み合わせたりしてユースケースを実現する
 
-func (i Interactor) GetBlogList() (entities.Blogs, error) {
-	return i.Repository.FetchAllBlogs()
+func (i Interactor) GetBlogList(page int, perPage int) (entities.Blogs, error) {
+	return i.Repository.FetchAllBlogs(page, perPage)
 }
 
 func (i Interactor) GetBlog(ID string) (entities.Blog, error) {

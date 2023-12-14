@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Clean Blog - Start Bootstrap Theme</title>
+    <title>{{ .SiteTitle }}</title>
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -34,25 +34,25 @@
     </div>
 </nav>
 <!-- Page Header-->
-<header class="masthead m-0" style="background-image: url('/assets/images/home-bg.jpeg')">
+<header class="masthead m-0" style="background-image: url('/assets/images/home-bg.jpeg'); position: absolute; width: 100%; height: 100%;">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="post-heading">
-                    <h1>Edit Blog</h1>
+                    <h1>{{ .SiteHeader }}</h1>
                     <hr class="my-4" />
-                    <form id="putForm" action="/blog/edit/{{ .ID }}" method="POST">
+                    <form id="putForm" action="/blog/edit/{{ .Blog.ID }}" method="POST">
                         <div class="mb-3">
                             <label class="form-label">Blog Title</label>
-                            <input name="title" type="text" class="form-control" value="{{ .Title }}">
+                            <input name="title" type="text" class="form-control" value="{{ .Blog.Title }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Blog Description</label>
-                            <input name="description" type="text" class="form-control" value="{{ .Description }}">
+                            <input name="description" type="text" class="form-control" value="{{ .Blog.Description }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Blog Content</label>
-                            <textarea name="content" type="text" class="form-control" rows="4">{{ .Content }}</textarea>
+                            <textarea name="content" type="text" class="form-control" rows="4">{{ .Blog.Content }}</textarea>
                         </div>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDelete">Delete</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -84,7 +84,7 @@
 <script>
     function deletePost() {
         const xhr = new XMLHttpRequest();
-        xhr.open('DELETE', '/blog/delete/{{ .ID }}', true);
+        xhr.open('DELETE', '/blog/delete/{{ .Blog.ID }}', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {

@@ -10,9 +10,10 @@ type Repository struct {
 	DB *gorm.DB
 }
 
-func (r *Repository) FetchAllBlogs() (entities.Blogs, error) {
+func (r *Repository) FetchAllBlogs(page int, perPage int) (entities.Blogs, error) {
 	var blogs = entities.Blogs{}
-	tx := r.DB.Order("created_at DESC").Find(&blogs)
+	offset := (page - 1) * perPage
+	tx := r.DB.Order("created_at DESC").Offset(offset).Limit(perPage).Find(&blogs)
 	return blogs, tx.Error
 }
 
