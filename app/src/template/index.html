@@ -58,7 +58,7 @@
                     <h3 class="post-subtitle">{{ .Description }}</h3>
                 </a>
                 <p class="post-meta">
-                    Posted on {{ .DateFormatted }}
+                    Posted on {{ .CreatedAt | readableDateFormat }}
                 </p>
             </div>
             <!-- Divider-->
@@ -104,7 +104,7 @@
                         </a>
                     </li>
                 </ul>
-                <div class="small text-center text-muted fst-italic">Copyright &copy; Your Website 2023</div>
+                <div class="small text-center text-muted fst-italic">Copyright &copy; Go Blog 2023</div>
             </div>
         </div>
     </div>

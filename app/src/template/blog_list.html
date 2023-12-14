@@ -58,7 +58,7 @@
                             <h3 class="post-subtitle">{{ .Description }}</h3>
                         </a>
                         <p class="post-meta">
-                            Posted on {{ .DateFormatted }}
+                            Posted on {{ .CreatedAt | readableDateFormat }}
                         </p>
                     </div>
                     <!-- Divider-->

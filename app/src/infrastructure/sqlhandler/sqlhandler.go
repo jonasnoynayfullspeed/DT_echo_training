@@ -1,7 +1,6 @@
 package sqlhandler
 
 import (
-	"app/src/entities"
 	"fmt"
 	"log"
 	"os"
@@ -12,16 +11,6 @@ import (
 
 type SqlHandler struct {
 	DB *gorm.DB
-}
-
-func MigrateEntities(DB *gorm.DB) {
-	migrator := DB.Migrator()
-	if !migrator.HasTable(entities.Blog{}) {
-		err := DB.AutoMigrate(&entities.Blog{})
-		if err != nil {
-			log.Fatalln("Problem with migrating entities to mysql database")
-		}
-	}
 }
 
 func NewSqlHandler() *SqlHandler {
@@ -35,7 +24,6 @@ func NewSqlHandler() *SqlHandler {
 	if err != nil {
 		log.Fatalln(connection + "database can't connect")
 	}
-	MigrateEntities(DB)
 
 	sqlHandler.DB = DB
 	return sqlHandler

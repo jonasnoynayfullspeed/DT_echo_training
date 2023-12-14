@@ -6,8 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-const ReadableDateFormat = "January 02, 2006"
-
 type Blog struct {
 	gorm.Model
 	ID          int64 `gorm:"primaryKey;autoIncrement"`
@@ -20,7 +18,3 @@ type Blog struct {
 }
 
 type Blogs []Blog
-
-func (b Blog) DateFormatted() string {
-	return b.CreatedAt.Format(ReadableDateFormat)
-}
