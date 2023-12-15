@@ -24,6 +24,7 @@ func NewSqlHandler() *SqlHandler {
 	if err != nil {
 		log.Fatalln(connection + "database can't connect")
 	}
+
 	sqlHandler.DB = DB
 	return sqlHandler
 }
